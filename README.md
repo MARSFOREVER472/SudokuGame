@@ -1,6 +1,6 @@
 # SudokuGame
 
-Antes de comenzar a jugar sudoku, se tendrá una matriz de 81 filas y 81 columnas, quedando una división de una matriz de 9*9.
+Antes de comenzar a jugar sudoku, se tendrá una matriz de 9 filas y 9 columnas, quedando una división de una matriz de 9*9.
 
 Ejemplo:
 
