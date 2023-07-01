@@ -35,8 +35,9 @@ namespace SudokuApp
                 }
 
             }
-            MatrixTransposition(); // Llamado del método anterior.
-            SwapRowsInBlock(); // Llamado del método anterior.
+            // MatrixTransposition(); // Llamado del método anterior.
+            // SwapRowsInBlock(); // Llamado del método anterior.
+            SwapColumnsInBlock(); // Llamado del método anterior.
             CreateMap(); // Llamado del método anterior.
         }
 
@@ -58,6 +59,32 @@ namespace SudokuApp
                 var temp = map[line1, i];
                 map[line1, i] = map[line2, i];
                 map[line2, i] = temp;
+            }
+        }
+
+        // Haremos el mismo proceso pero esta vez en columnas.
+
+        public void SwapColumnsInBlock()
+        {
+            Random rnd = new Random(); // Variable Aleatoria.
+            var block = rnd.Next(0, n); // Variable para bloques que se intercambian en columnas.
+            var row1 = rnd.Next(0, n); // Variable para la fila 1.
+            var line1 = block * n + row1; // La línea 1 es el intercambio en bloques para la fila 1.
+            var row2 = rnd.Next(0, n); // Variable para la fila 2.
+
+            // Crearemos un ciclo while para realizar el proceso de intercambiar 2 filas.
+
+            while (row1 == row2)
+                row2 = rnd.Next(0, n); // Fila 2.
+            var line2 = block * n + row2; // La línea 2 es el intercambio en bloques para la fila 2.
+
+            // El proceso anterior se repite a tal punto de que se declararon variables.
+
+            for (int i = 0; i < n * n; i++) // Solamente en columnas para realizar el intercambio.
+            {
+                var temp = map[i, line1];
+                map[i, line1] = map[i, line2];
+                map[i, line2] = temp;
             }
         }
 
