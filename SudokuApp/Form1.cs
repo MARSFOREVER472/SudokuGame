@@ -33,8 +33,50 @@ namespace SudokuApp
                 {
                     map[i, j] = (i * n + i / n + j) % (n * n) + 1; // Se crea una matriz dando un resultado total de filas por columnas.
                 }
+
             }
+            MatrixTransposition(); // Llamado del método anterior.
+            SwapRowsInBlock(); // Llamado del método anterior.
             CreateMap(); // Llamado del método anterior.
+        }
+
+        public void SwapRowsInBlock() // Método que permite intercambiar filas en bloques.
+        {
+            Random rnd = new Random(); // Variable Aleatoria.
+            var block = rnd.Next(0, n); // Variable para bloques que se intercambian en filas.
+            var row1 = rnd.Next(0, n); // Variable para la fila 1.
+            var line1 = block * n + row1; // La línea 1 es el intercambio en bloques para la fila 1.
+            var row2 = rnd.Next(0, n); // Variable para la fila 2.
+
+            // Crearemos un ciclo while para realizar el proceso de intercambiar 2 filas.
+
+            while (row1 == row2)
+                row2 = rnd.Next(0, n); // Fila 2.
+            var line2 = block * n + row2; // La línea 2 es el intercambio en bloques para la fila 2.
+            for (int i = 0; i < n * n; i++) // Solamente en filas para realizar el intercambio.
+            {
+                var temp = map[line1, i];
+                map[line1, i] = map[line2, i];
+                map[line2, i] = temp;
+            }
+        }
+
+        // Método que permite crear una matriz transpuesta.
+
+        public void MatrixTransposition()
+        {
+            int[,] tMap = new int[n * n, n * n]; // Variable para crear una matriz transpuesta.
+
+            // Recorremos por filas y columnas mediante ciclos for.
+
+            for (int i = 0; i < n * n; i++) // Filas.
+            {
+                for (int j = 0; j < n * n; j++) // Columnas.
+                {
+                    tMap[i, j] = map[j, i]; // Se crea una matriz transpuesta.
+                }
+            }
+            map = tMap; // La matriz original pasaría a ser una matriz transpuesta.
         }
 
         // Método que crea una matriz al generarla.
