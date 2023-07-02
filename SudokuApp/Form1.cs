@@ -37,8 +37,68 @@ namespace SudokuApp
             }
             // MatrixTransposition(); // Llamado del método anterior.
             // SwapRowsInBlock(); // Llamado del método anterior.
-            SwapColumnsInBlock(); // Llamado del método anterior.
+            // SwapColumnsInBlock(); // Llamado del método anterior.
+            // SwapBlocksInRow(); // Llamado del método anterior.
+            SwapBlocksInColumn(); // Llamado del método anterior.
             CreateMap(); // Llamado del método anterior.
+        }
+
+        public void SwapBlocksInRow() // Método que permite intercambiar bloques en filas.
+        {
+            Random r = new Random(); // Variable aleatoria para los números de los bloques.
+            var block1 = r.Next(0, n); // Variable para el bloque 1 (A intercambiar).
+            var block2 = r.Next(0, n); // Variable para el bloque 2 (Intercambiado).
+
+            // Mientras el bloque a intercambiar será el intercambiado en filas.
+
+            while (block1 == block2)
+                block2 = r.Next(0, n); // Se intercambia con este bloque en fila.
+            block1 *= n; // Bloque 1.
+            block2 *= n; // Bloque 2.
+
+            // Recorremos por filas y columnas mediante ciclos for para el intercambio.
+
+            for (int i = 0; i < n * n; i++) // En filas.
+            {
+                var k = block2; // Variable del bloque ya intercambiado.
+
+                for (int j = block1; j < block1 + n; j++) // El valor de la matriz transpuesta se intercambia mediante un resultado de k.
+                {
+                    var temp = map[j, i];
+                    map[j, i] = map[k, i];
+                    map[k, i] = temp;
+                    k++;
+                }
+            } 
+        }
+
+        public void SwapBlocksInColumn() // Método que permite intercambiar bloques en filas.
+        {
+            Random r = new Random(); // Variable aleatoria para los números de los bloques.
+            var block1 = r.Next(0, n); // Variable para el bloque 1 (A intercambiar).
+            var block2 = r.Next(0, n); // Variable para el bloque 2 (Intercambiado).
+
+            // Mientras el bloque a intercambiar será el intercambiado en filas.
+
+            while (block1 == block2)
+                block2 = r.Next(0, n); // Se intercambia con este bloque en fila.
+            block1 *= n; // Bloque 1.
+            block2 *= n; // Bloque 2.
+
+            // Recorremos por filas y columnas mediante ciclos for para el intercambio.
+
+            for (int i = 0; i < n * n; i++) // En filas.
+            {
+                var k = block2; // Variable del bloque ya intercambiado.
+
+                for (int j = block1; j < block1 + n; j++) // El valor de la matriz transpuesta se intercambia mediante un resultado de k.
+                {
+                    var temp = map[i, j];
+                    map[i, j] = map[i, k];
+                    map[i, k] = temp;
+                    k++;
+                }
+            }
         }
 
         public void SwapRowsInBlock() // Método que permite intercambiar filas en bloques.
