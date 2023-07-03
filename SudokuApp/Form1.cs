@@ -56,15 +56,20 @@ namespace SudokuApp
         // Crearemos un método que pueda ocultar celdas del tablero.
         public void HideCells()
         {
-            int N = 40; // Se inicializa mínimo 40 bloques.
+            int N = 40; // 40 números se visualizan en este tablero.
             Random r = new Random(); // Variable aleatoria.
 
             for (int i = 0; i < n * n; i++) // Filas.
             {
                 for (int j = 0; j < n * n; j++) // Columnas.
                 {
-                    int a = r.Next(0, 3); // 3*3 por cada grupo.
+                    int a = r.Next(0, 2); // Se ocultan números en las celdas del tablero.
                     buttons[i, j].Text = a == 0 ? "" : buttons[i, j].Text; // Se ingresa un número en bloques.
+                    
+                    // Se disminuye cada número de los bloques.
+
+                    if (a == 0) 
+                        N--;
                 }
             }
         }
