@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace SudokuApp
         const int n = 3; // Matriz n de 3*3.
         const int sizeButton = 50; // Definimos el tamaño inicial de un botón de la matriz.
         public int[,] map = new int[n * n, n * n]; // Filas por Columnas de n números.
+        public Button[,] buttons = new Button[n * n, n * n]; // Variable para los botones del tablero.
 
         // Método de ejecución.
         public Form1()
@@ -32,6 +34,7 @@ namespace SudokuApp
                 for (int j = 0; j < n * n; j++) // Por columnas.
                 {
                     map[i, j] = (i * n + i / n + j) % (n * n) + 1; // Se crea una matriz dando un resultado total de filas por columnas.
+                    buttons[i, j] = new Button(); // Nuevo botón declarado.
                 }
 
             }
@@ -39,8 +42,68 @@ namespace SudokuApp
             // SwapRowsInBlock(); // Llamado del método anterior.
             // SwapColumnsInBlock(); // Llamado del método anterior.
             // SwapBlocksInRow(); // Llamado del método anterior.
-            SwapBlocksInColumn(); // Llamado del método anterior.
+            // SwapBlocksInColumn(); // Llamado del método anterior.
+
+            Random r = new Random(); // Variable aleatoria.
+            for (int i = 0; i < 10; i++) // En filas.
+            {
+                ShuffleMap(r.Next(0, 5)); // Lo haremos por 5 veces.
+            }
             CreateMap(); // Llamado del método anterior.
+            HideCells(); // Llamado del método anterior.
+        }
+
+        // Crearemos un método que pueda ocultar celdas del tablero.
+        public void HideCells()
+        {
+            int N = 40; // 40 números se visualizan en este tablero.
+            Random r = new Random(); // Variable aleatoria.
+
+            for (int i = 0; i < n * n; i++) // Filas.
+            {
+                for (int j = 0; j < n * n; j++) // Columnas.
+                {
+                    int a = r.Next(0, 2); // Se ocultan números en las celdas del tablero.
+                    buttons[i, j].Text = a == 0 ? "" : buttons[i, j].Text; // Se ingresa un número en bloques.
+                    
+                    // Se disminuye cada número de los bloques.
+
+                    if (a == 0) 
+                        N--;
+                }
+            }
+        }
+
+        // Método que permita entremezclar una matriz entre métodos anteriores con un switch y cases:
+
+        public void ShuffleMap(int i)
+        {
+            switch (i)
+            {
+                case 0: // Si es una matriz transpuesta.
+                    MatrixTransposition();
+                    break;
+
+                case 1: // Si una matriz se intercambia en filas por bloques.
+                    SwapRowsInBlock();
+                    break;
+
+                case 2: // Si una matriz se intercambia en columnas por bloques.
+                    SwapColumnsInBlock();
+                    break;
+
+                case 3: // Si una matriz se intercambia en bloques por filas.
+                    SwapBlocksInRow();
+                    break;
+
+                case 4: // Si una matriz se intercambia en bloques por columnas.
+                    SwapBlocksInColumn();
+                    break;
+
+                default: // Probaremos con la matriz transpuesta.
+                    MatrixTransposition();
+                    break;
+            }
         }
 
         public void SwapBlocksInRow() // Método que permite intercambiar bloques en filas.
@@ -175,7 +238,8 @@ namespace SudokuApp
                 for (int j = 0; j < n * n; j++) // Por columnas.
                 {
                     Button button = new Button(); // Agregaremos automáticamente un nuevo botón como parte de una matriz generada.
-                    button.Size = new Size(sizeButton, sizeButton); // El tamaño del botón se define por el ancho y la altura.}
+                    button.Size = new Size(sizeButton, sizeButton); // El tamaño del botón se define por el ancho y la altura.
+                    buttons[i, j] = button;
                     button.Text = map[i, j].ToString(); // Se agrega texto a los botones de una matriz.
                     button.Location = new Point(j * sizeButton, i * sizeButton); // Se define la posición de cada botón mediante el ancho y su altura.
                     this.Controls.Add(button); // Añade un botón.
