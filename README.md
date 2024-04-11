@@ -1,6 +1,6 @@
 # SudokuGame
 
-**_Antes de comenzar a jugar este juego, se tendrá una matriz posicional de 9 filas y 9 columnas, quedando una división de una matriz de 9*9._**
+**_Antes de comenzar a jugar este juego, se tendrá una matriz posicional de 9 filas y 9 columnas, quedando en una división de una matriz de 9*9._**
 
 **_Ejemplo:_**
 
