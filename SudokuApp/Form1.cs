@@ -59,17 +59,23 @@ namespace SudokuApp
             int N = 40; // 40 números se visualizan en este tablero.
             Random r = new Random(); // Variable aleatoria.
 
-            for (int i = 0; i < n * n; i++) // Filas.
+            while (N > 0)
             {
-                for (int j = 0; j < n * n; j++) // Columnas.
-                {
-                    int a = r.Next(0, 2); // Se ocultan números en las celdas del tablero.
-                    buttons[i, j].Text = a == 0 ? "" : buttons[i, j].Text; // Se ingresa un número en bloques.
-                    
-                    // Se disminuye cada número de los bloques.
 
-                    if (a == 0) 
-                        N--;
+
+                for (int i = 0; i < n * n; i++) // Filas.
+                {
+                    for (int j = 0; j < n * n; j++) // Columnas.
+                    {
+                        int a = r.Next(0, 3); // Se ocultan números en las celdas del tablero.
+                        buttons[i, j].Text = a == 0 ? "" : buttons[i, j].Text; // Se ingresa un número en bloques.
+                        buttons[i, j].Enabled = a == 0 ? true : false;
+
+                        // Se disminuye cada número de los bloques.
+
+                        if (a == 0)
+                            N--;
+                    }
                 }
             }
         }
@@ -241,12 +247,37 @@ namespace SudokuApp
                     button.Size = new Size(sizeButton, sizeButton); // El tamaño del botón se define por el ancho y la altura.
                     buttons[i, j] = button;
                     button.Text = map[i, j].ToString(); // Se agrega texto a los botones de una matriz.
+                    button.Click += OnCellPressed;
                     button.Location = new Point(j * sizeButton, i * sizeButton); // Se define la posición de cada botón mediante el ancho y su altura.
                     this.Controls.Add(button); // Añade un botón.
                 }
             }
         }
 
-        
+        // Método que verifica al presionar una celda de botón.
+
+        public void OnCellPressed(object sender, EventArgs e)
+        {
+            Button pressedButton = sender as Button; // Cuando se presiona un botón.
+            string buttonText = pressedButton.Text; // Variable que involucra a los botones con un texto.
+            if (string.IsNullOrEmpty(buttonText)) // Si el número aumenta en 1 al presionar un botón.
+            {
+                pressedButton.Text = "1"; // Aumenta simplemente en 1 por baldosa del tablero.
+            }
+
+            else // En caso contrario cuando es un 10.
+            {
+                int num = int.Parse(buttonText); // Variable numérica.
+                num++; // Aumenta en 1 el contador (Número).
+                if (num == 10) // Si los números son en 10 en total.
+                    num = 1; // Cuando es 1 en la celda.
+                pressedButton.Text = num.ToString(); // Al presionar un botón, convierte en una cadena de caracteres.
+
+
+
+            }
+            
+
+        }
     }
 }
