@@ -67,14 +67,17 @@ namespace SudokuApp
                 {
                     for (int j = 0; j < n * n; j++) // Columnas.
                     {
-                        int a = r.Next(0, 3); // Se ocultan números en las celdas del tablero.
-                        buttons[i, j].Text = a == 0 ? "" : buttons[i, j].Text; // Se ingresa un número en bloques.
-                        buttons[i, j].Enabled = a == 0 ? true : false;
+                        if (!string.IsNullOrEmpty(buttons[i, j].Text))
+                        {
+                           int a = r.Next(0, 3); // Se ocultan números en las celdas del tablero.
+                           buttons[i, j].Text = a == 0 ? "" : buttons[i, j].Text; // Se ingresa un número en bloques.
+                           buttons[i, j].Enabled = a == 0 ? true : false;
 
-                        // Se disminuye cada número de los bloques.
+                           // Se disminuye cada número de los bloques.
 
-                        if (a == 0)
+                           if (a == 0)
                             N--;
+                        }
                     }
                 }
             }
