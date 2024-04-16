@@ -61,8 +61,6 @@ namespace SudokuApp
 
             while (N > 0)
             {
-
-
                 for (int i = 0; i < n * n; i++) // Filas.
                 {
                     for (int j = 0; j < n * n; j++) // Columnas.
@@ -77,8 +75,14 @@ namespace SudokuApp
 
                            if (a == 0)
                             N--;
+
+                            if (N <= 0) // Si se realizó este procedimiento con números aleatorios del tablero en columnas.
+                                break;
                         }
                     }
+
+                    if (N <= 0) // Si se realizó este procedimiento con números aleatorios del tablero en filas.
+                        break;
                 }
             }
         }
@@ -281,6 +285,32 @@ namespace SudokuApp
             }
             
 
+        }
+
+        // Nuevo método para el botón del juego...
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Para las filas del tablero...
+
+            for (int i = 0; i < n * n; i++)
+            {
+                // Para las columnas del tablero...
+
+                for (int j = 0; j < n * n; j++)
+                {
+                    var botonTexto = buttons[i, j].Text; // Para cada botón del tablero.
+
+                    if (botonTexto != map[i, j].ToString()) // Si el procedimiento efectuado no es válido...
+                    {
+                        MessageBox.Show("Buscaando la zonah >:( ...");
+                        return;
+                    }
+                }
+            }
+
+            MessageBox.Show("Bien hecho!");
+            GenerateMap(); // Llamado del método anterior.
         }
     }
 }
